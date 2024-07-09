@@ -1,1 +1,1 @@
-# wise_testing
+# testing a null resource creation
