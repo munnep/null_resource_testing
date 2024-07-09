@@ -2,7 +2,7 @@ resource "null_resource" "test" {}
 
 
 
-
+resource "null_resource" "test2" {}
 
 
 # variable "pet_words" {
