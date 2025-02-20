@@ -1,25 +1,12 @@
-resource "null_resource" "test" {}
+resource "null_resource" "previous" {}
 
-resource "null_resource" "test3" {}
- 
+resource "time_sleep" "wait_120_seconds" {
+  depends_on = [null_resource.previous]
 
-# variable "pet_words" {
-#   default     = 10
-#   description = "Number of words per pet"
-# }
-# variable "pets_count" {
-#   default     = 2500
-#   description = "Count of pets"
-# }
-# variable "string_length" {
-#   default = 512
-# }
-# 
-# resource "random_pet" "ourhoard" {
-#   count  = var.pets_count
-#   length = var.pet_words
-#   keepers = {
-#     # Generate a new pet name each time the time changes
-#     make_on_every_apply = timestamp()
-#   }
-# }
+  create_duration = "120s"
+}
+
+# This resource will create (at least) 30 seconds after null_resource.previous
+resource "null_resource" "next" {
+  depends_on = [time_sleep.wait_120_seconds]
+}
