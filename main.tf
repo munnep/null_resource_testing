@@ -27,7 +27,7 @@ terraform {
   }
 }
 
-resource "null_resource" "test" {}
+resource "null_resource" "test2" {}
 
 provider "spotify" {
   # Configuration options
