@@ -20,7 +20,7 @@ resource "shell_script" "github_repository" {
   }
 
   environment = {
-    NAME        = "HELLO-WORLD"
+    NAME        = "HELLO-WORLD2"
     DESCRIPTION = "description"
   }
 }
