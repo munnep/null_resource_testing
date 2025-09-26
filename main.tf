@@ -1,26 +1,13 @@
-terraform {
-  required_providers {
-    shell = {
-      source = "scottwinkler/shell"
-      version = "1.7.10"
-    }
-  }
+# This resource will destroy (potentially immediately) after null_resource.next
+resource "null_resource" "previous" {}
+
+resource "time_sleep" "wait_300_seconds" {
+  depends_on = [null_resource.previous]
+
+  create_duration = "300s"
 }
 
-provider "shell" {
-  # Configuration options
-}
-
-resource "shell_script" "github_repository" {
-  lifecycle_commands {
-    create = file("${path.module}/create.sh")
-    read   = file("${path.module}/read.sh")
-    update = file("${path.module}/update.sh")
-    delete = file("${path.module}/delete.sh")
-  }
-
-  environment = {
-    NAME        = "HELLO-WORLD2"
-    DESCRIPTION = "description"
-  }
+# This resource will create (at least) 300 seconds after null_resource.previous
+resource "null_resource" "next" {
+  depends_on = [time_sleep.wait_300_seconds]
 }
